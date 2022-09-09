@@ -18,49 +18,34 @@ class View extends EventEmitter {
     switch (this.#model.getPage()) {
       case "start":
         return this.renderStartPage();
-      case "choose-topics":
-        return this.#renderChooseTopic();
+      case "question":
+        return this.renderQuestion();
       default:
         throw new Error("Wrong page");
     }
   }
 
   renderStartPage() {
-    if (this.#model.getTopics().length) {
-      console.log("Животные");
-      this.#model.getTopics().forEach(View.#printTopics); // поправить когда у нас будут данные
-      console.log();
-    }
-    readlineSync.question("Нажмите любую клавишу, для выбора темы");
-    // здесь попросим у модели список тем и предоставим пользователю выбор
-    // ...
-    // теперь уведомим контроллер о том что пользователь выбрал тему
-
+    this.#model.getTopics().forEach(View.#printTopics); // поправить когда у нас будут данные
+    console.log();
+    const topic = readlineSync.question(
+      "Нажмите цифру от 1-го до 3-х, для выбора темы"
+    );
     this.emit("topicChosen", topic);
   }
 
-  //страница отображения топиков
-  // renderChooseTopic() {
-  //     // Отображаем текущий бургер
-  //     View.#printTopics(this.#model.getCurrentBurger());
-  //     console.log();
-
-  //     console.log('Введите название нового ингридиента или оставьте пустым, чтобы закончить');
-  //     // считываем следующий ингридиент из командной строки
-  //     const ingridient = readlineSync.question('> ');
-
-  //     // генерируем событие addIngridient если пользователь хочет добавить ингридиент
-  //     // и stopMakeBurger если хочет закончить создание бургера
-  //     if (ingridient) {
-  //       this.emit('addIngridient', ingridient);
-  //     } else {
-  //       this.emit('stopMakeBurger');
-  //     }
-
-  // }
+  // страница отображения топиков
+  renderQuestion() {
+    View.#printTopics(this.#model.getTopics()); // отобразить выбранную тему
+    console.log();
+    const topicC = readlineSync.question(" ");
+    if (topicC) {
+      this.emit("answer1", answer1);
+    }
+  }
 
   static #printTopics(topic) {
-    console.log(`[${topic.join(" | ")}]`);
+    console.log(topic);
   }
 }
 
