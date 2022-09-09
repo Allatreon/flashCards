@@ -13,7 +13,7 @@ class Controller {
       // каждый раз когда View генерирует событие 'makeBurger'
       'makeBurger',
       // вызываем метод startMakeBurger модели
-      () => this.#model.startMakeBurger()
+      () => this.#model.startMakeBurger();
     );
     this.#view.on('addIngridient', (ingridient) => this.#model.addIngridient(ingridient));
     this.#view.on('stopMakeBurger', () => this.#model.stopMakeBurger());
@@ -25,5 +25,6 @@ class Controller {
     this.#view.render();
   }
 }
+
 
 module.exports = Controller;

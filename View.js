@@ -1,5 +1,4 @@
-const { EventEmitter } = require("events");
-const readlineSync = require("readline-sync");
+const { EventEmitter } = require('events');
 
 class View extends EventEmitter {
   #model;
@@ -9,23 +8,27 @@ class View extends EventEmitter {
     this.#model = model;
 
     // каждый раз когда модель изменяется обновляем отображение
-    this.#model.on("update", () => this.render());
+    this.#model.on('update', () => this.render());
   }
 
   render() {
     console.clear();
     // отображаем ту страницу, на которой мы сейчас находимся
     switch (this.#model.getPage()) {
-      case "start":
+      case 'start':
         return this.renderStartPage();
+
       case "question":
         return this.renderQuestion();
       default:
         throw new Error("Wrong page");
+
     }
   }
 
   renderStartPage() {
+
+
     this.#model.getTopics().forEach(View.#printTopics); // поправить когда у нас будут данные
     console.log();
     const topic = readlineSync.question(
@@ -46,6 +49,7 @@ class View extends EventEmitter {
 
   static #printTopics(topic) {
     console.log(topic);
+
   }
 }
 
