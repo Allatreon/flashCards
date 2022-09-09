@@ -1,5 +1,5 @@
 const { EventEmitter } = require('events');
-const fs = require('fs');
+
 
 class Model extends EventEmitter {
   // сначала приложение находится на стартовой странице (выбор темы)
@@ -8,14 +8,22 @@ class Model extends EventEmitter {
 
   #score = 0;
 
-  #topics = fs.readdirSync(`${__dirname}/topics`).map((element) => element.replace(/^(.*?)_.+/, '$1'));
+  #topic = '';
+
+  #questionKey = '';
 
   getPage() {
     return this.#page;
   }
+  getTopics() {
+    const fs = require('fs');
+    return fs.readdirSync(`${__dirname}/topics`).map((element) => element.replace(/^(.*?)_.+/, '$1'))
+  }
 
   chooseTopic(topic) {
-    this.page = 'question';
+    this.#page = 'question';
+    this.#questionKey = 'What shall I do?';
+    this.#topic = topic;
     // тема выбрана, сделай необходимые изменения в модели (в т.ч. измени this.page)
     // ...
     // и теперь пора уведомить View об этих изменениях
@@ -25,6 +33,7 @@ class Model extends EventEmitter {
   getScore() {
     return this.#score;
   }
+
 }
-//asdas
+
 module.exports = Model;
