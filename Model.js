@@ -5,6 +5,8 @@ class Model extends EventEmitter {
   // подумай, какие ещё страницы будут в твоём приложении?
   #page = 'start';
 
+
+  
   getPage() {
     return this.#page;
   }

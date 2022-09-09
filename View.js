@@ -12,11 +12,12 @@ class View extends EventEmitter {
   }
 
   render() {
+    console.clear();
     // отображаем ту страницу, на которой мы сейчас находимся
     switch (this.#model.getPage()) {
       case 'start':
         return this.renderStartPage();
-      // ...
+      
     }
   }
 
