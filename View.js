@@ -1,4 +1,5 @@
 const { EventEmitter } = require('events');
+const readlineSync = require('readline-sync');
 
 class View extends EventEmitter {
   #model;
@@ -17,35 +18,39 @@ class View extends EventEmitter {
     switch (this.#model.getPage()) {
       case 'start':
         return this.renderStartPage();
-
       case "question":
         return this.renderQuestion();
       default:
         throw new Error("Wrong page");
-
     }
+
+
+
+
   }
 
   renderStartPage() {
-
-
     this.#model.getTopics().forEach(View.#printTopics); // поправить когда у нас будут данные
     console.log();
-    const topic = readlineSync.question(
-      "Нажмите цифру от 1-го до 3-х, для выбора темы"
-    );
+    let topic = readlineSync.question("Напишите свою тему: \n ");
     this.emit("topicChosen", topic);
   }
 
   // страница отображения топиков
   renderQuestion() {
-    View.#printTopics(this.#model.getTopics()); // отобразить выбранную тему
-    console.log();
-    const topicC = readlineSync.question(" ");
-    if (topicC) {
-      this.emit("answer1", answer1);
+
+    let question = this.#model.getQuestion();
+    let answer = this.#model.getAnswer();
+    let topic = readlineSync.question(question);
+    if (topic === answer) {
+      console.log('правильно')
+    } else {
+      console.log('ложно')
     }
+    readlineSync.question()
+    this.emit("answer1", topic);
   }
+
 
   static #printTopics(topic) {
     console.log(topic);
